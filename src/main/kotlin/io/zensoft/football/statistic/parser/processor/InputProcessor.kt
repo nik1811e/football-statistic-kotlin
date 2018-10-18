@@ -23,22 +23,28 @@ class InputProcessor(standing: StandingDto) {
             do {
                 printPrompt()
 
-                val command = it.nextLine()
-                handle(command.trim())
+                val command = it.nextLine().trim()
+                if (command.isBlank()) {
+                    continue
+                }
+
+                handle(command)
             } while (!command.equals(COMMAND_EXIT, true))
         }
     }
 
     private fun handle(command: String) {
         when (command.toLowerCase()) {
-            COMMAND_EXIT -> {
-                println("Thank you for attention")
-                println("By Nikita Eliseenko")
-            }
+            COMMAND_EXIT -> printGoodBye()
             COMMAND_HELP -> printHelp()
             in REGEX_NUMBER -> searchByNumber(Integer.parseInt(command))
             else -> searchByName(command)
         }
+    }
+
+    private fun printGoodBye() {
+        println("Thank you for attention")
+        println("By Nikita Eliseenko")
     }
 
     private fun printLine() {
@@ -100,23 +106,6 @@ class InputProcessor(standing: StandingDto) {
         private const val COMMAND_EXIT = "exit"
 
         private val REGEX_NUMBER = Regex("\\d+")
-
-
-        // FIXME: DEPRECATED
-//        private var to: StandingsResponse? = null
-//        private var map: Map<Int, String> = emptyMap()
-//
-//        init {
-//            val accessKey = PropertyUtil.readValue("api", "accessKey")
-//            val api = FootballDataApi(accessKey)
-//            to = api.getStandings(2021)
-//
-//            var index = 1
-//            map = HashMap()
-//            for (table: TableDto in to!!.standings[0].table) {
-//                (map as HashMap<Int, String>)[index++] = table.team.name
-//            }
-//        }
     }
 }
 
