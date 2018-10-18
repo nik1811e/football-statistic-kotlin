@@ -66,8 +66,8 @@ class InputProcessor(standing: StandingDto) {
 
     private fun printTable(table: TableDto) {
         System.out.println(table.team.name)
-
         printLine()
+
         System.out.println("Total | Won | Draw | Lost | Points")
         printLine()
         System.out.printf(
