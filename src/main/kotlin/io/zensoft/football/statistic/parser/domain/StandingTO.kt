@@ -3,7 +3,7 @@ package io.zensoft.football.statistic.parser.domain
 
 import com.google.gson.annotations.SerializedName
 
-class StandingDTO {
+class StandingTO {
     @SerializedName("table")
-    var table: List<TableDTO> = emptyList()
+    var table: List<TableTO> = emptyList()
 }
