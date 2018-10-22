@@ -1,7 +1,7 @@
 package io.zensoft.football.statistic.parser.api
 
 import com.google.gson.Gson
-import io.zensoft.football.statistic.parser.to.StatisticTO
+import io.zensoft.football.statistic.parser.domain.StatisticDTO
 import io.zensoft.football.statistic.parser.utils.Utils
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -9,7 +9,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class CallToApi {
-    fun call(requestUrl: String): StatisticTO? {
+    fun call(requestUrl: String): StatisticDTO? {
 
         try {
             var output: String?
@@ -24,10 +24,10 @@ class CallToApi {
             }
 
             val br = BufferedReader(InputStreamReader((conn.inputStream)))
-            var to: StatisticTO? = null
+            var to: StatisticDTO? = null
             output = br.readLine()
             while (output != null) {
-                to = Gson().fromJson(output, StatisticTO::class.java)
+                to = Gson().fromJson(output, StatisticDTO::class.java)
                 output = br.readLine()
             }
             conn.disconnect()

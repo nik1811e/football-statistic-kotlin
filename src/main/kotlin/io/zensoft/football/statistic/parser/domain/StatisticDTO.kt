@@ -1,10 +1,10 @@
-package io.zensoft.football.statistic.parser.to
+package io.zensoft.football.statistic.parser.domain
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class StatisticTO {
+class StatisticDTO {
     @SerializedName("standings")
     @Expose
-    var standings: List<StandingTO> = emptyList()
+    var standings: List<StandingDTO> = emptyList()
 }

@@ -1,8 +1,8 @@
 package io.zensoft.football.statistic.parser.handlers
 
 import io.zensoft.football.statistic.parser.api.CallToApi
-import io.zensoft.football.statistic.parser.to.StatisticTO
-import io.zensoft.football.statistic.parser.to.TableTO
+import io.zensoft.football.statistic.parser.domain.StatisticDTO
+import io.zensoft.football.statistic.parser.domain.TableDTO
 import io.zensoft.football.statistic.parser.utils.Utils
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -12,7 +12,7 @@ import java.util.regex.Pattern
 class InputHandler {
 
     companion object {
-        private var to: StatisticTO? = null
+        private var to: StatisticDTO? = null
         private var map: Map<Int, String> = HashMap()
         private val HELP = "help"
         private val EXIT = "exit"
@@ -21,7 +21,7 @@ class InputHandler {
             to = CallToApi().call("http://api.football-data.org/v2/competitions/"
                     + Utils().readPropertiesValue("id") + "/standings")
             var index = 1
-            for (table: TableTO in to!!.standings[0].table) {
+            for (table: TableDTO in to!!.standings[0].table) {
                 (map as HashMap<Int, String>)[index++] = table.team.name
             }
         }

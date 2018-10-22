@@ -1,12 +1,12 @@
-package io.zensoft.football.statistic.parser.to
+package io.zensoft.football.statistic.parser.domain
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class TableTO {
+class TableDTO {
     @SerializedName("team")
     @Expose
-    lateinit var team: TeamTO
+    lateinit var team: TeamDTO
     @SerializedName("playedGames")
     @Expose
     var playedGames: Long = 0
