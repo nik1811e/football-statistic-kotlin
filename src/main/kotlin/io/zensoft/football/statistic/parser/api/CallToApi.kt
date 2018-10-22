@@ -1,5 +1,4 @@
 package io.zensoft.football.statistic.parser.api
-
 import com.google.gson.Gson
 import io.zensoft.football.statistic.parser.domain.StatisticDTO
 import io.zensoft.football.statistic.parser.utils.Utils
@@ -7,23 +6,19 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-
 class CallToApi {
     fun call(requestUrl: String): StatisticDTO? {
-
         try {
             var output: String?
-
-            val conn = URL(requestUrl).openConnection() as HttpURLConnection
+            val url = URL(requestUrl)
+            val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = Utils().readPropertiesValue("method")
             conn.setRequestProperty("Accept", Utils().readPropertiesValue("contenttype"))
             conn.setRequestProperty("X-Auth-Token", Utils().readPropertiesValue("apikey"))
-
             if (conn.responseCode != 200) {
                 throw RuntimeException("Failed : HTTP error code : " + conn.responseCode)
             }
-
-            val br = BufferedReader(InputStreamReader((conn.inputStream)))
+            var br = BufferedReader(InputStreamReader((conn.inputStream)))
             var to: StatisticDTO? = null
             output = br.readLine()
             while (output != null) {
