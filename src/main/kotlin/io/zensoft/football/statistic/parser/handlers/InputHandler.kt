@@ -28,19 +28,19 @@ class InputHandler {
     }
 
     fun perform() {
-         input()
-     }
+        input()
+    }
 
     private fun handler(word: String) {
         if (!word.isEmpty()) {
             if (HELP.equals(word.trim(), true)) {
                 outputHelp()
             } else if (EXIT.equals(word.trim(), true)) {
-                System.err.println("Thank you for attention\nBy Nikita Eliseenko")
+                println("Thank you for attention\nBy Nikita Eliseenko")
             } else if (!HELP.equals(word.trim(), true)) {
                 handleInputTeam(word)
             } else {
-                System.err.println("Please, enter the correct data.")
+                println("Please, enter the correct data.")
                 input()
             }
         } else {
@@ -52,13 +52,13 @@ class InputHandler {
     private fun handleInputTeam(word: String) {
         if (Pattern.compile("\\d+").matcher(word).matches()) {
             if (Integer.parseInt(word) <= map.size) {
-                System.out.println(searchResultByName(map[Integer.parseInt(word)]))
+                println(searchResultByName(map[Integer.parseInt(word)]))
             } else {
-                System.err.println("Invalid number $word entered.")
+                println("Invalid number $word entered.")
             }
             input()
         } else {
-            System.out.println(searchResultByName(word))
+            println(searchResultByName(word))
             input()
         }
     }
@@ -92,7 +92,7 @@ class InputHandler {
             val standardInput = BufferedReader(InputStreamReader(System.`in`))
             handler(standardInput.readLine())
         } catch (e: Exception) {
-            System.err.println("ERROR: " + e.message)
+            println("ERROR: " + e.message)
         }
     }
 }

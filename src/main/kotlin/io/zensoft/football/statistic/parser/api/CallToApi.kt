@@ -10,9 +10,11 @@ import java.net.URL
 
 class CallToApi {
     fun call(requestUrl: String): StatisticTO? {
-        val conn = URL(requestUrl).openConnection() as HttpURLConnection
+
         try {
             var output: String?
+
+            val conn = URL(requestUrl).openConnection() as HttpURLConnection
             conn.requestMethod = Utils().readPropertiesValue("method")
             conn.setRequestProperty("Accept", Utils().readPropertiesValue("contenttype"))
             conn.setRequestProperty("X-Auth-Token", Utils().readPropertiesValue("apikey"))
