@@ -1,6 +1,6 @@
 package io.zensoft.football.statistic.parser.handlers
 
-import io.zensoft.football.statistic.parser.api.CallToApi
+import io.zensoft.football.statistic.parser.api.FootballDataApi
 import io.zensoft.football.statistic.parser.domain.StatisticDTO
 import io.zensoft.football.statistic.parser.domain.TableDTO
 import io.zensoft.football.statistic.parser.utils.Utils
@@ -18,7 +18,7 @@ class InputHandler {
         private val EXIT = "exit"
 
         init {
-            to = CallToApi().call("http://api.football-data.org/v2/competitions/"
+            to = FootballDataApi().call("http://api.football-data.org/v2/competitions/"
                     + Utils().readPropertiesValue("id") + "/standings")
             var index = 1
             for (table: TableDTO in to!!.standings[0].table) {
