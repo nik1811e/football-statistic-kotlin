@@ -11,30 +11,33 @@ import java.util.regex.Pattern
 
 class InputHandler {
 
-    private val HELP = "help"
-    private val EXIT = "exit"
-
     companion object {
         private var to: StatisticTO? = null
-        private var map: Map<Int, String> = emptyMap()
+        private var map: Map<Int, String> = HashMap()
+        private val HELP = "help"
+        private val EXIT = "exit"
+
         init {
             to = CallToApi().call("http://api.football-data.org/v2/competitions/"
                     + Utils().readPropertiesValue("id") + "/standings")
             var index = 1
-            map = HashMap()
             for (table: TableTO in to!!.standings[0].table) {
                 (map as HashMap<Int, String>)[index++] = table.team.name
             }
         }
     }
 
+    fun perform() {
+         input()
+     }
+
     private fun handler(word: String) {
         if (!word.isEmpty()) {
-            if (HELP.equals(word.trim(),true)) {
+            if (HELP.equals(word.trim(), true)) {
                 outputHelp()
-            } else if (EXIT.equals(word.trim(),true)) {
+            } else if (EXIT.equals(word.trim(), true)) {
                 System.err.println("Thank you for attention\nBy Nikita Eliseenko")
-            } else if (!HELP.equals(word.trim(),true)) {
+            } else if (!HELP.equals(word.trim(), true)) {
                 handleInputTeam(word)
             } else {
                 System.err.println("Please, enter the correct data.")
@@ -49,7 +52,7 @@ class InputHandler {
     private fun handleInputTeam(word: String) {
         if (Pattern.compile("\\d+").matcher(word).matches()) {
             if (Integer.parseInt(word) <= map.size) {
-                System.out.println(searchResultByName(map.get(Integer.parseInt(word))))
+                System.out.println(searchResultByName(map[Integer.parseInt(word)]))
             } else {
                 System.err.println("Invalid number $word entered.")
             }
@@ -62,7 +65,7 @@ class InputHandler {
 
     private fun outputHelp() {
         var index = 1
-        for (table in to!!.standings!!.get(0).table!!) {
+        for (table in to!!.standings[0].table) {
             println("${index++} ${table.team.name}")
         }
         input()
@@ -70,8 +73,8 @@ class InputHandler {
 
     private fun searchResultByName(name: String?): String {
         var r = ""
-        for (table in to!!.standings!!.get(0).table!!) {
-            if (table.team.name.equals(name,true)) {
+        for (table in to!!.standings[0].table) {
+            if (table.team.name.equals(name, true)) {
                 r = ("\n" + name + "\nTotal\tWon\tDraw\tLost\tPoints\n" + table.playedGames + "\t"
                         + table.won + "\t" + table.draw + "\t" + table.lost + "\t"
                         + table.points)
@@ -82,19 +85,14 @@ class InputHandler {
     }
 
     private fun input() {
-        try
-        {
+        try {
             println(("_____________________________________________________\n" +
                     "Enter the team name (number) or " + HELP +
                     "\nFor exit: " + EXIT))
             val standardInput = BufferedReader(InputStreamReader(System.`in`))
             handler(standardInput.readLine())
-        }
-        catch (e:Exception) {
+        } catch (e: Exception) {
             System.err.println("ERROR: " + e.message)
         }
-    }
-    fun perform() {
-        input()
     }
 }

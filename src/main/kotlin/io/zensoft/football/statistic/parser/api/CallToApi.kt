@@ -23,8 +23,7 @@ class CallToApi {
                 throw RuntimeException("Failed : HTTP error code : " + conn.responseCode)
             }
 
-            var br = BufferedReader(InputStreamReader((conn.inputStream)))
-
+            val br = BufferedReader(InputStreamReader((conn.inputStream)))
             var to: StatisticTO? = null
             output = br.readLine()
             while (output != null) {
